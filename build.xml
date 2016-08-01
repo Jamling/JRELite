@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="init" name="cn.ieclipse.jrelite">
+	<property name="repack.src" value="temp/unziped_lib/" />
+	<property name="repack.dest" value="temp/reziped_lib/" />
+	<!-- ================================= 
+          target: init              
+         ================================= -->
+	<target name="init" description="init">
+		<zip destfile="${ant.project.name}.zip" basedir=".">
+			<exclude name="bin/" />
+			<exclude name="${ant.project.name}.zip" />
+			<exclude name="temp/" />
+			<exclude name=".settings/" />
+			<exclude name="libs/" />
+		</zip>
+	</target>
+
+	<!-- ================================= 
+          target: repack_resources_jar              
+         ================================= -->
+	<target name="repack_resources_jar" description="repack resources.jar">
+		<property name="lib" value="resources" />
+		<jar destfile="${repack.dest}/${lib}.jar" basedir="${repack.dest}/${lib}" manifest="${repack.dest}/${lib}/META-INF/MANIFEST.MF">
+
+		</jar>
+	</target>
+	<!-- ================================= 
+          target: repack_rt_jar              
+         ================================= -->
+	<target name="repack_rt_jar" depends="add_missing_classes" description="repack rt.jar">
+		<property name="lib" value="rt" />
+		<jar destfile="${repack.dest}/${lib}.jar" basedir="${repack.dest}/${lib}" manifest="${repack.dest}/${lib}/META-INF/MANIFEST.MF">
+
+		</jar>
+	</target>
+	<!-- ================================= 
+          target: repack_charsets_jar              
+         ================================= -->
+	<target name="repack_charsets_jar" description="repack rt.jar">
+		<property name="lib" value="charsets" />
+		<jar destfile="${repack.dest}/${lib}.jar" basedir="${repack.dest}/${lib}" manifest="${repack.dest}/${lib}/META-INF/MANIFEST.MF">
+
+		</jar>
+	</target>
+	<!-- ================================= 
+          target: copy_resources              
+         ================================= -->
+	<target name="copy_resources">
+		<copy todir="temp/reziped_lib/resources">
+			<fileset dir="temp/unziped_lib/resources">
+				<include name="com/sun/org/**/*.*" />
+				<include name="META-INF/**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="start">
+		<exec dir="." executable="start.bat">
+		</exec>
+	</target>
+
+	<target name="add_missing_classes">
+		<copy todir="temp/reziped_lib/rt/com/sun/org/apache/xerces/internal/xni/parser/" file="temp/unziped_lib/rt/com/sun/org/apache/xerces/internal/xni/parser/XMLParseException.class">
+
+		</copy>
+		<copy todir="temp/reziped_lib/rt/com/sun/org/apache/xerces/internal/util/" file="temp/unziped_lib/rt/com/sun/org/apache/xerces/internal/util/URI$MalformedURIException.class" />
+		<copy todir="temp/reziped_lib/rt/java/util" file="temp/unziped_lib/rt/java/util/EventObject.class" />
+		<copy todir="temp/reziped_lib/rt/java/util/regex" file="temp/unziped_lib/rt/java/util/regex/Pattern$BnM.class" />
+
+		<copy todir="temp/reziped_lib/rt/java/util/regex" file="temp/unziped_lib/rt/java/util/regex/Pattern$Slice.class" />
+		<copy todir="temp/reziped_lib/rt/java/util/regex" file="temp/unziped_lib/rt/java/util/regex/Pattern$SliceS.class" />
+		<copy todir="temp/reziped_lib/rt/java/net" file="temp/unziped_lib/rt/java/net/InetAddress.class" />
+		<copy todir="temp/reziped_lib/rt/java/net" file="temp/unziped_lib/rt/java/net/InetAddress.class" />
+		<copy todir="temp/reziped_lib/rt/java/net" file="temp/unziped_lib/rt/java/net/Inet6Address.class" />
+		<copy todir="temp/reziped_lib/rt/java/net" file="temp/unziped_lib/rt/java/net/InetAddressImpl.class" />
+
+
+		<copy todir="temp/reziped_lib/rt/java/io" file="temp/unziped_lib/rt/java/io/InterruptedIOException.class" />
+	</target>
+	<target name="add_missing_classes2">
+		<copy todir="temp/reziped_lib/rt/java/io" file="temp/unziped_lib/rt/java/io/InterruptedException.class" />
+
+	</target>
+</project>
